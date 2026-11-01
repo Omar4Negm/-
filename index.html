@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>استمارة تحضير الساحة الخارجية (الأسبوعية)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main class="sheet" id="sheet">
+
+  <!-- ===== الأزرار (لا تُطبع) ===== -->
+  <div class="toolbar no-print">
+    <button type="button" class="btn" id="btnPreview"><span id="btnPreviewText">معاينة قبل الطباعة</span></button>
+    <button type="button" class="btn" id="btnPrint"><span>طباعة A4 PDF</span></button>
+  </div>
+
+  <!-- ===== الأشرطة الزخرفية ===== -->
+  <svg class="band band-top" viewBox="0 0 297 9" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <pattern id="hex" width="18" height="9" patternUnits="userSpaceOnUse">
+        <rect width="18" height="9" fill="#dccdea"/>
+        <polygon points="0,0 9,9 18,0" fill="#b496cf"/>
+        <polygon points="0,9 9,0 18,9" fill="#cdb7e0"/>
+        <polygon points="4.500,0 9,4.500 13.500,0" fill="#a77fc4"/>
+      </pattern>
+    </defs>
+    <rect width="297" height="9" fill="url(#hex)"/>
+  </svg>
+  <svg class="band band-bottom" viewBox="0 0 297 9" preserveAspectRatio="none" aria-hidden="true">
+    <rect width="297" height="9" fill="url(#hex)"/>
+  </svg>
+
+  <!-- طفلان صغيران أعلى اليسار -->
+  <div class="kids" aria-hidden="true">
+    <img src="/طفلان كرتونيان بابتسامة مشرقة.png" alt="" class="kid kid1">
+  </div>
+
+  <!-- ===== العنوان (شريط أحمر) ===== -->
+  <h1 class="title"><span>استمارة تحضير الساحة الخارجية ( الأسبوعية )</span></h1>
+
+  <!-- ===== بيانات أعلى الصفحة ===== -->
+  <section class="meta" id="meta">
+    <label class="field"><span class="lbl">الصف :</span><input type="text" id="grade" autocomplete="off"></label>
+    <label class="field"><span class="lbl">القاعة :</span><input type="text" id="hall" autocomplete="off"></label>
+    <div class="field year">
+      <span class="lbl">لعام :</span>
+      <select id="yearStart" aria-label="سنة البداية"></select>
+      <span class="lbl">/</span>
+      <span id="yearEnd" class="year-end"></span>
+      <span class="lbl">م</span>
+    </div>
+  </section>
+
+  <!-- ===== الجدول (يُبنى من script.js) ===== -->
+  <section class="table-wrap">
+    <table class="grid" id="grid"><thead></thead><tbody></tbody></table>
+  </section>
+
+  <!-- ===== الجزء السفلي الثابت ===== -->
+  <footer class="footer">
+    <div class="fixed">إعداد :</div>
+    <div class="fixed">ملاحظات المشرفة :</div>
+    <div class="fixed">توقيع المشرفة :</div>
+    <div class="fixed">توقيع إدارة المدرسة</div>
+  </footer>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

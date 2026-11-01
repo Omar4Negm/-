@@ -1,0 +1,165 @@
+/* ============ المتغيرات: عدّل الألوان والأبعاد من هنا ============ */
+:root {
+  /* مقاس الصفحة */
+  --page-w: 297mm;
+  --page-h: 210mm;
+  --page-pad-x: 13mm;
+  --band-h: 9mm;
+
+  /* الألوان */
+  --red: #e63340;
+  --red-dark: #b8232e;
+  --magenta: #e0147e;
+  --purple: #8d5fb3;
+  --line: #111111;
+  --ink: #111111;
+  --paper: #ffffff;
+
+  /* أحجام الجدول */
+  --title-h: 15mm;
+  --head-h: 11.5mm;
+  --row-h: 21.5mm;
+
+  --font: "Cairo", "Tajawal", Tahoma, sans-serif;
+}
+
+@page { size: A4 landscape; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: #e8edf4;
+  font-family: var(--font);
+  color: var(--ink);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ============ الصفحة ============ */
+.sheet {
+  position: relative;
+  width: var(--page-w);
+  height: var(--page-h);
+  margin: 8mm auto;
+  padding: calc(var(--band-h) + 7mm) var(--page-pad-x) 0;
+  background: var(--paper);
+  overflow: hidden;
+  box-shadow: 0 2mm 8mm rgba(0, 0, 0, .15);
+  display: flex; flex-direction: column;
+}
+
+/* ============ الأشرطة ============ */
+.band { position: absolute; left: 0; width: 100%; height: var(--band-h); display: block; }
+.band-top { top: 0; }
+.band-bottom { bottom: 0; }
+
+.kids { position: absolute; top: calc(var(--band-h) + 1mm); left: 11mm; display: flex; }
+.kids img { width: 3cm; height: 2.5cm; }
+.kids img + img { margin-inline-start: -4mm; }
+
+/* ============ الأزرار ============ */
+.toolbar {
+  position: absolute; top: calc(var(--band-h) + 2mm); right: 10mm; z-index: 5;
+  display: flex; flex-direction: column; gap: 2mm;
+}
+.btn {
+  font: 700 3.2mm var(--font); color: #fff; background: var(--purple);
+  border: 0; border-radius: 2mm; padding: 1.8mm 4mm; cursor: pointer;
+}
+.btn:hover { background: #774a9c; }
+.btn:focus-visible { outline: .6mm solid var(--red); outline-offset: .4mm; }
+
+/* ============ العنوان: شريط أحمر ============ */
+.title {
+  position: relative; z-index: 1;
+  margin: 0 auto 7mm;
+  width: 150mm; height: var(--title-h);
+  display: flex; align-items: center; justify-content: center;
+  background: var(--red);
+  color: #fff;
+  font: 800 6.6mm var(--font);
+}
+.title::before, .title::after {
+  content: ""; position: absolute; top: 4.5mm; z-index: -1;
+  width: 17mm; height: var(--title-h);
+  background: var(--red-dark);
+}
+.title::before { left: -13mm;  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 28% 50%); }
+.title::after  { right: -13mm; clip-path: polygon(0 0, 100% 0, 72% 50%, 100% 100%, 0 100%); }
+
+/* ============ الحقول العلوية ============ */
+.meta { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3mm; }
+.field { display: flex; align-items: flex-end; gap: 1.5mm; }
+.lbl { color: var(--magenta); font: 800 4.2mm var(--font); white-space: nowrap; }
+.field input {
+  width: 48mm; height: 7mm;
+  border: 2px solid var(--magenta); border-bottom: .5mm dotted var(--magenta); border-radius: 5px;
+  background: transparent; outline: 0;
+  font: 700 4mm var(--font); color: var(--ink); padding: 0 1mm;
+}
+.field select {
+  border: 0; border-bottom: .5mm dotted var(--magenta); background: transparent;
+  font: 700 4.2mm var(--font); color: var(--ink); padding: 0 1mm; height: 7mm;
+}
+.year-end { font: 700 4.2mm var(--font); }
+
+/* ============ الجدول ============ */
+.table-wrap { border: .5mm solid var(--line); }
+.grid { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.grid th, .grid td { border: .4mm solid var(--line); padding: 0; }
+.grid th { height: var(--head-h); background: #fff; color: var(--ink); font: 800 5.6mm var(--font); }
+.grid td { height: var(--row-h); vertical-align: middle; }
+.grid td.day { text-align: center; font: 800 5.4mm var(--font); }
+
+.grid textarea, .grid input[type="text"] {
+  display: block; width: 100%; height: calc(var(--row-h) - .4mm);
+  border: 0; outline: 0; resize: none; overflow: hidden; background: transparent;
+  font: 600 3.7mm/1.45 var(--font); color: var(--ink); padding: 2mm 2.5mm;
+}
+.grid input[type="text"] { text-align: center; font-size: 4mm; }
+.grid textarea:focus, .grid input[type="text"]:focus { background: #faf5ff; }
+
+/* ---- منتقي التاريخ ---- */
+.date-box {
+  position: relative; display: flex; align-items: center; justify-content: space-between;
+  width: calc(100% - 6mm); height: 9mm; margin: 0 auto; padding: 0 2.5mm;
+  border: .3mm solid #cdb7e0; border-radius: 2mm; cursor: pointer;
+}
+.date-text { font: 700 4.1mm var(--font); }
+.date-text:empty::before { content: attr(data-ph); color: #a79bb3; font-weight: 600; font-size: 3.5mm; }
+.date-box svg { width: 5.5mm; height: 5.5mm; fill: none; stroke: var(--purple); stroke-width: 1.6; }
+.date-box input[type="date"] {
+  position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; border: 0;
+}
+.date-box:focus-within { outline: .5mm solid var(--magenta); }
+
+/* ============ الجزء السفلي الثابت ============ */
+.footer {
+  margin-top: auto; flex: 0 0 auto;
+  height: 12mm; margin-bottom: calc(var(--band-h) + 2mm);
+  display: flex; justify-content: space-between; align-items: center;
+  padding-inline: 4mm 10mm;
+}
+.fixed { font: 800 3.9mm var(--font); user-select: none; white-space: nowrap; flex: 0 0 auto; }
+.fixed:nth-child(1) { margin-inline-end: 0; }
+
+/* ============ وضع المعاينة والطباعة ============ */
+body.preview .field input,
+body.preview .field select,
+body.preview .date-box { border-color: transparent; background: transparent; }
+body.preview .field select { appearance: none; -webkit-appearance: none; padding: 0; }
+body.preview .date-box svg { display: none; }
+body.preview .date-text:empty::before { content: ""; }
+body.preview .grid textarea:focus, body.preview .grid input[type="text"]:focus { background: transparent; }
+body.preview .sheet { box-shadow: none; }
+
+@media print {
+  html, body { width: var(--page-w); height: var(--page-h); background: #fff; }
+  .no-print { display: none !important; }
+  .sheet { margin: 0; box-shadow: none; zoom: 1 !important; break-after: avoid; page-break-after: avoid; }
+  .field input, .field select, .date-box { border-color: transparent; background: transparent; }
+  .field select { appearance: none; -webkit-appearance: none; padding: 0; }
+  .date-box svg { display: none; }
+  .date-text:empty::before { content: ""; }
+  .grid textarea, .grid input[type="text"] { background: transparent !important; }
+}
