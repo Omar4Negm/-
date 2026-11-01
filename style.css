@@ -39,11 +39,11 @@ body {
 .sheet {
   position: relative;
   width: var(--page-w);
-  height: var(--page-h);
+  min-height: var(--page-h);
   margin: 8mm auto;
   padding: calc(var(--band-h) + 7mm) var(--page-pad-x) 0;
   background: var(--paper);
-  overflow: hidden;
+  overflow: visible;
   box-shadow: 0 2mm 8mm rgba(0, 0, 0, .15);
   display: flex; flex-direction: column;
 }
@@ -111,13 +111,15 @@ body {
 .grid td { height: var(--row-h); vertical-align: middle; }
 .grid td.day { text-align: center; font: 800 5.4mm var(--font); }
 
-.grid textarea, .grid input[type="text"] {
+.grid textarea {
   display: block; width: 100%; height: calc(var(--row-h) - .4mm);
-  border: 0; outline: 0; resize: none; overflow: hidden; background: transparent;
+  min-height: calc(var(--row-h) - .4mm);
+  border: 0; outline: 0; resize: none; overflow: hidden; overflow-wrap: anywhere;
+  background: transparent;
   font: 600 3.7mm/1.45 var(--font); color: var(--ink); padding: 2mm 2.5mm;
 }
-.grid input[type="text"] { text-align: center; font-size: 4mm; }
-.grid textarea:focus, .grid input[type="text"]:focus { background: #faf5ff; }
+.grid textarea.game-text { text-align: center; font-size: 4mm; }
+.grid textarea:focus { background: #faf5ff; }
 
 /* ---- منتقي التاريخ ---- */
 .date-box {
@@ -150,16 +152,17 @@ body.preview .date-box { border-color: transparent; background: transparent; }
 body.preview .field select { appearance: none; -webkit-appearance: none; padding: 0; }
 body.preview .date-box svg { display: none; }
 body.preview .date-text:empty::before { content: ""; }
-body.preview .grid textarea:focus, body.preview .grid input[type="text"]:focus { background: transparent; }
+body.preview .grid textarea:focus { background: transparent; }
 body.preview .sheet { box-shadow: none; }
 
 @media print {
   html, body { width: var(--page-w); height: var(--page-h); background: #fff; }
   .no-print { display: none !important; }
-  .sheet { margin: 0; box-shadow: none; zoom: 1 !important; break-after: avoid; page-break-after: avoid; }
+  .sheet { min-height: var(--page-h); margin: 0; box-shadow: none; zoom: 1 !important; break-after: avoid; page-break-after: avoid; }
   .field input, .field select, .date-box { border-color: transparent; background: transparent; }
   .field select { appearance: none; -webkit-appearance: none; padding: 0; }
   .date-box svg { display: none; }
   .date-text:empty::before { content: ""; }
-  .grid textarea, .grid input[type="text"] { background: transparent !important; }
+  .grid textarea { background: transparent !important; }
+  .grid tr { break-inside: avoid; page-break-inside: avoid; }
 }

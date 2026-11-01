@@ -37,7 +37,7 @@ function buildTable() {
           <input type="date" class="date-input" data-row="${i}" aria-label="تاريخ يوم ${day}">
         </label>
       </td>
-      <td><input type="text" aria-label="اسم اللعبة - ${day}"></td>
+      <td><textarea class="game-text" aria-label="اسم اللعبة - ${day}"></textarea></td>
       <td><textarea aria-label="الهدف - ${day}"></textarea></td>
       <td><textarea aria-label="المواد والأدوات - ${day}"></textarea></td>
       <td><textarea aria-label="الملاحظات - ${day}"></textarea></td>
@@ -63,6 +63,18 @@ function bindDates() {
         try { input.showPicker(); } catch (e) { /* المتصفح سيتولى الفتح */ }
       }
     });
+  });
+}
+
+function setupTextareas() {
+  document.querySelectorAll(".grid textarea").forEach(textarea => {
+    const fitContent = () => {
+      textarea.style.height = "auto";
+      textarea.style.height = `${Math.max(textarea.scrollHeight, textarea.parentElement.clientHeight)}px`;
+    };
+
+    textarea.addEventListener("input", fitContent);
+    fitContent();
   });
 }
 
@@ -111,6 +123,7 @@ window.addEventListener("resize", fitToScreen);
 /* ============ تشغيل ============ */
 buildTable();
 bindDates();
+setupTextareas();
 setupYear();
 setupButtons();
 fitToScreen();
